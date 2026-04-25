@@ -1,5 +1,11 @@
 package Math;
 
+/* 진리표 생성 규칙
+N = 인자의 개수(EX: p, q → 2 = N)
+I = 행의 개수(N ^ 2)
+J = 열의 개수(N)
+interval = 진리값 주기(2 ^ (N - 1 - J))
+ */
 interface TruthTable{
     
     // 1. 사용하는 변수의 개수를 반환
@@ -44,24 +50,52 @@ interface TruthTable{
     }
 }
 
+interface TruthT{
+    void generate(String... variables);
+    void printTable();
+}
 
-// 논리곱(Conjunction): p ∧ q
-// 두 명제가 모두 참(True)일 때만 결과가 참이 되는 논리 연산입니다.
-class Conjunction implements TruthTable {
+class TruthTableProcessor implements TruthT {
+    private String[] headers;
+    private int[][] table;
+    private int rows;
+    private int cols;
 
     @Override
-    public int getVaribleCount() {
-        return 2;
+    public void generate(String... variables) {
+        this.headers = variables; // 진리표의 헤더 값
+        this.cols = variables.length; // 진리표의 열의 크기
+        this.rows = (int) Math.pow(2, cols); // 진리표의 행의 크기
+        this.table = new int[rows][cols];       
+
+        for (int i = 0; i < rows; i++){ // 행의 개수만큼 반복
+            for (int j = 0; j < cols; j++){ // 열의 개수만큼 반복
+                int interval = (int) Math.pow(2, cols - 1 - j); // 진리 값 변동 주기
+                table[i][j] = ((i / interval) % 2) ^ 1; // 진리 값 결정 로직(0 XOR 1 = 1 / 1 XOR 1 = 0)
+            }
+        }
     }
 
     @Override
-    public boolean evaluate(boolean [] values) {
-        return values[0] && values[1];
-    }
-    
-    @Override
-    public String getSymbol() {
-        return "p ∧ q";
+    public void printTable(){
+        if (headers == null || table == null){
+            System.out.println("표가 생성되지 않았습니다. generate()를 먼저 호출하세요.");
+            return;
+        }
+
+        // 1. 헤더 출력
+        for (String header : headers) {
+            System.out.print(header + "\t");
+        }
+        System.out.println("\n---------------------------");
+
+        // 2. 데이터 출력
+        for (int i = 0; i < rows; i++){
+            for (int j = 0; j < cols; j++){
+                System.out.print(table[i][j] + "\t");
+            }
+            System.out.println();
+        }
     }
 }
 
@@ -69,7 +103,8 @@ class Conjunction implements TruthTable {
 public class Main {
 
     public static void main(String[] args){
-        TruthTable conjunction = new Conjunction();
-        conjunction.printTable();
+        TruthT processor = new TruthTableProcessor();
+        processor.generate("p", "q", "r");
+        processor.printTable();
     }
 }
