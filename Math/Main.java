@@ -1,77 +1,31 @@
 package Math;
 
-/* 진리표 생성 규칙
-N = 인자의 개수(EX: p, q → 2 = N)
-I = 행의 개수(N ^ 2)
-J = 열의 개수(N)
-interval = 진리값 주기(2 ^ (N - 1 - J))
- */
-interface TruthTable{
-    
-    // 1. 사용하는 변수의 개수를 반환
-    int getVaribleCount();
-
-    // 2. 배열을 인자로 받아 연산 수행
-    boolean evaluate(boolean[] values);
-
-    // 3. 출력 기호
-    String getSymbol();
-
-    // 4. 동적 진리표 생성 디폴트 메서드
-    default void printTable() {
-        int n = getVaribleCount();
-        int rows = (int) Math.pow(2, n);
-
-        // [헤더 출력] p, q, r ... 알파벳 순서대로 출력
-        for (int i = 0; i < n; i++){
-            System.out.println((char) ('p' + i) + "\t");
-        }
-        System.out.println("Result(" + getSymbol() + ")");
-        System.out.println("---------------------------------");
-
-        // 진리표 데이터 생성 및 출력
-        for (int i = 0; i < rows; i++){
-            boolean[] condition = new boolean[n]; // 각 행의 T/F 값을 담을 배열
-
-            for (int j = 0; j < n; j++) {
-                int interval = (int) Math.pow(2, n - 1 - j);
-
-                // 몫이 짝수면 T, 홀수면 F
-                condition[j] = (i / interval) % 2 == 0;
-
-                System.out.println((condition[j] ? "T" : "F") + " ");
-            }
-
-            // 하위 클래스에서 구현한 로직으로 결과 계산
-            boolean result = evaluate(condition);
-            System.out.println(" " + (result ? "T" : "F"));
-        }
-        System.out.println();
-    }
-}
-
 interface TruthT{
     void generate(String... variables);
     void printTable();
 }
 
 class TruthTableProcessor implements TruthT {
-    private String[] headers;
-    private int[][] table;
-    private int rows;
-    private int cols;
+    String[] headers;  // 인자 값 저장 배열 변수
+    boolean[][] table; // 진리 표 가변 배열 변수
+    private int rows;          // 진리 표 행의 크기 저장 변수
+    private int cols;          // 진리 표 열의 크기 저장 변수
 
     @Override
     public void generate(String... variables) {
-        this.headers = variables; // 진리표의 헤더 값
-        this.cols = variables.length; // 진리표의 열의 크기
-        this.rows = (int) Math.pow(2, cols); // 진리표의 행의 크기
-        this.table = new int[rows][cols];       
+        this.headers = variables;              // 진리 표의 헤더 값
+        this.cols = variables.length;          // 진리 표의 열의 크기 계산
+        this.rows = (int) Math.pow(2, cols); // 진리 표의 행의 크기
+        this.table = new boolean[rows][cols];   // 진리 표 객체 생성
 
         for (int i = 0; i < rows; i++){ // 행의 개수만큼 반복
+            int shift = cols - 1;
             for (int j = 0; j < cols; j++){ // 열의 개수만큼 반복
-                int interval = (int) Math.pow(2, cols - 1 - j); // 진리 값 변동 주기
-                table[i][j] = ((i / interval) % 2) ^ 1; // 진리 값 결정 로직(0 XOR 1 = 1 / 1 XOR 1 = 0)
+                // 비트 연산 후 논리 연산: 끝 비트가 0이면 T, 1이면 F
+                table[i][j] = (i >> (shift--) & 1 ) == 0;
+
+                // int interval = (int) Math.pow(2, cols - 1 - j); // 진리 값 변동 주기
+                // table[i][j] = (i / interval) % 2 == 0; // 논리 연산 시(비트 연산이 약 2.3배 더 빠름)
             }
         }
     }
@@ -92,7 +46,7 @@ class TruthTableProcessor implements TruthT {
         // 2. 데이터 출력
         for (int i = 0; i < rows; i++){
             for (int j = 0; j < cols; j++){
-                System.out.print(table[i][j] + "\t");
+                System.out.print((table[i][j] ? "T" : "F") + "\t");
             }
             System.out.println();
         }
