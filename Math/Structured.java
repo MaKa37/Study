@@ -53,17 +53,12 @@ class TruthTableLogic implements TruthTable {
         // 3. 행 단위로 논리 연산
         for (int i = 0; i < rows; i++) {
             switch (operator.toUpperCase()) {
-                case "AND":
-                case "&&":
-                    newCol[i] = col1[i] && col2[i];
-                    break;
-                case "OR":
-                case "||":
-                    newCol[i] = col1[i] || col2[i];
-                    break;
-                default:
+                case "AND", "&&" -> newCol[i] = col1[i] && col2[i];
+                case "OR", "||" -> newCol[i] = col1[i] || col2[i];
+                default -> {
                     System.out.println("지원하지 않는 연산자입니다: " + operator);
                     return;
+                }
             }
         }
 
