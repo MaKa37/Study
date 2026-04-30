@@ -7,6 +7,14 @@ interface Addable {
 public class Lambda {
 
     public static void main(String[] args) {
+
+        // 0. 기존 익명 객체
+        Runnable runnable = new Runnable() {
+            public void run() {System.out.println("Hello, Lambda!");}
+        };
+
+        runnable.run();
+
         // 1. 기존 익명 구현 클래스 문법
         Addable ad1 = new Addable() {
             public int add(int a, int b) {
@@ -22,6 +30,6 @@ public class Lambda {
         // 3. 가장 축약된 형태의 람다식
         Addable ad3 = (a, b) -> (a + b);
 
-        System.out.println(ad1.add(1, 1) + ad2.add(1, 1) + ad3.add(1, 1));
+        System.out.println(ad1.add(1, 1) + ad2.add(1, 1) + ad3.add(1, 1));  
     }
 }
