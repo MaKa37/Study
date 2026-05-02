@@ -78,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 209.50469589233398
+    "width": 209.50469589233398,
+    "collapsed": true
   },
   "right": {
     "id": "0ac39f8e08064043",
@@ -95,7 +96,7 @@
               "type": "backlink",
               "state": {
                 "file": "Java/JAVA.md",
-                "collapseAll": false,
+                "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
                 "showSearch": false,
@@ -165,7 +166,8 @@
               "title": "JAVA 의 개요"
             }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
