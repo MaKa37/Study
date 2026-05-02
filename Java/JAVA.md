@@ -136,20 +136,22 @@ public class DataTypeExample {
 
 ##### 연산자와 특수 기호
 
-| **분류**    | **종류**     | **기호**                            | **주요 의미**                         |
-| --------- | ---------- | --------------------------------- | --------------------------------- |
-| **연산자**   | **산술 연산자** | `+`, `-`, `*`, `/`, `%`           | 사칙연산 및 나머지(`%`) 계산                |
-|           | **대입 연산자** | `=`, `+=`, `-=`, `*=`, `/=`, `%=` | 값을 변수에 할당 (복합 대입 포함)              |
-|           | **증감 연산자** | `++`, `--`                        | 변수의 값을 1씩 증가 또는 감소                |
-|           | **비교 연산자** | `==`, `!=`, `>`, `<`, `>=`, `<=`  | 두 값을 비교하여 참/거짓(boolean) 반환        |
-|           | **논리 연산자** | `&&`,  \|, `!`                    | AND(그리고), OR(또는), NOT(부정) 조건 결합   |
-|           | **삼항 연산자** | `? :`                             | 조건식 ? 참일 때 값 : 거짓일 때 값            |
-| **특수 기호** | **중괄호**    | `{ }`                             | 클래스, 메서드, 제어문 등의 **코드 블록(영역)** 지정 |
-|           | **소괄호**    | `( )`                             | 연산 우선순위 지정, 메서드 매개변수 선언/호출        |
-|           | **대괄호**    | `[ ]`                             | 배열 선언 및 인덱스(순서) 접근                |
-|           | **세미콜론**   | `;`                               | 하나의 **문장(명령어)이 끝났음**을 표시          |
-|           | **마침표**    | `.`                               | 객체의 멤버(필드, 메서드)에 접근 (하위 항목 호출)    |
-|           | **쉼표**     | `,`                               | 변수 연속 선언, 매개변수나 배열 요소 구분          |
+| **분류**    | **종류**      | **기호**                            | **주요 의미**                                    |
+| --------- | ----------- | --------------------------------- | -------------------------------------------- |
+| **연산자**   | **산술 연산자**  | `+`, `-`, `*`, `/`, `%`           | 사칙연산 및 나머지(`%`) 계산                           |
+|           | **대입 연산자**  | `=`, `+=`, `-=`, `*=`, `/=`, `%=` | 값을 변수에 할당 (복합 대입 포함)                         |
+|           | **증감 연산자**  | `++`, `--`                        | 변수의 값을 1씩 증가 또는 감소                           |
+|           | **비교 연산자**  | `==`, `!=`, `>`, `<`, `>=`, `<=`  | 두 값을 비교하여 참/거짓(boolean) 반환                   |
+|           | **논리 연산자**  | `&&`,  \|, `!`                    | AND(그리고), OR(또는), NOT(부정) 조건 결합              |
+|           | **배타적 연산자** | `^`                               | XOR(배타적 논리합)                                 |
+|           | **삼항 연산자**  | `? :`                             | 조건식 ? 참일 때 값 : 거짓일 때 값                       |
+| **특수 기호** | **중괄호**     | `{ }`                             | 클래스, 메서드, 제어문 등의 **코드 블록(영역)** 지정            |
+|           | **소괄호**     | `( )`                             | 연산 우선순위 지정, 메서드 매개변수 선언/호출                   |
+|           | **대괄호**     | `[ ]`                             | 배열 선언 및 인덱스(순서) 접근                           |
+|           | **세미콜론**    | `;`                               | 하나의 **문장(명령어)이 끝났음**을 표시                     |
+|           | **콜론**      | `:`                               | 향상된 for문 요소 분리, switch case 라벨, 삼항 연산자 조건 분기 |
+|           | **마침표**     | `.`                               | 객체의 멤버(필드, 메서드)에 접근 (하위 항목 호출)               |
+|           | **쉼표**      | `,`                               | 변수 연속 선언, 매개변수나 배열 요소 구분                     |
 
 1. 산술 및 대입 연산자: 계산과 저장
 	- 의미: 수학적 계산을 수행하고 그 결과를 변수에 저장합니다.
@@ -168,22 +170,63 @@ public class DataTypeExample {
 	- `{ }`는 영역의 시작과 끝을 의미합니다.
 	- `;`는 코드의 마침표를 의미합니다.
 	- `.`은 주로 만들어진 객체의 계층 구조를 구분할 때 사용(예: `System.out.println()`)
+	- `:`는
+		- for문에서 모든 데이터를 처음부터 끝까지 순서대로 꺼내서 탐색할 때 사용합니다.
+		- array에서는 `String[] str1 = "StringArray"에서 str[1:]의 값은 tringArray`
+		- switch-case문에서는 여러 조건 중 변수의 값과 일치하는 코드를 찾습니다.
+		- 삼항연산자에서는 간단한 `if-else문을 한 줄로 줄여서 작성할 때 사용합니다.`
 
 
 ```java
 public class OperatorSymbolExample { // { } 클래스 블록
-	 public static void main(String[] args) {
-	 
-	 // 1. 산술 및 대입 연산자, 세미콜론(;)
-	 int a = 10;
-	 int b = 3;
-	 int remainder = a % b; // % 나머지 연산 ( 10 나누기 3의 나머지는 1 )
-	 a += 5; // 복합 대입 연산 (a는 15가 됩니다.)
-	 
-	 // 2. 비교 및 논리 연산자, 소괄호()
-	 
-	 // 3.
-	 }
+	public static void main(String[] args) { 
+		// 1. 산술 및 대입 연산자, 세미콜론(;)
+		int a = 10;
+		int b = 3;
+		int remainder = a % b; // % 나머지 연산 ( 10 나누기 3의 나머지는 1 )
+		a += 5; // 복합 대입 연산 (a는 15가 됩니다.)
+		 
+		// 2. 비교 및 논리 연산자, 소괄호()
+		boolean isTrue = (a > 10) && (b < 5);
+		 
+		// 3. 증감 및 삼항 연산자
+		b++; // 증감 연산자로 인해 b는 4가 됨.
+		String result = (remainder == 1) ? "홀수" : "짝수";
+		 
+		// 4. 마침표(.)를 통한 객체 접근
+		System.out.println("결과: " + result);
+		 
+		// 5-1. for문에서의 콜론(:)
+		String[] fruits = {"사과", "바나나", "포도"};
+		for (String fruit : fruits) {
+			System.out.println("과일: " + fruit);
+		}
+		System.out.println();
+		
+		// 5-2. switch-case 에서의 콜론(:) 
+		int caseNumber = 1;
+		switch (caseNumber) {
+			case 1: 
+				System.out.println("1번 케이스");
+				break;
+			case 2:
+				System.out.println("1번 케이스");
+				break;
+			default:
+				System.out.println("기본 케이스");
+		}
+		
+		// 5-3. 반복문 라벨에서의 콜론(:)
+		outerLoop:
+		for(int i = 0; i = 3; i++) {
+			for(int j = 0; j < 3; j++) {
+				if (i == 1 && j == 1) {
+					System.out.println("조건 만족으로 전체 반복문 강제 종료");
+					break outerLoop; // 안쪽 반복문이지만 바깥 반복문까지 종료됨.
+				}
+			}
+		}
+	}
 }
 ```
 
@@ -205,15 +248,83 @@ public class OperatorSymbolExample { // { } 클래스 블록
 ---
 
 #### Class 기본 문법
-필드(Fields / 멤버 변수)
-- 클래스에서 가장 먼저 객체의 상태와 데이터를 정의하는 변수입니다.
-- 보통 정적(Static)인 변수를 먼저 선언하고, 그 다음 인스턴스 변수를 작성합니다.
-- 문법 구조: `[접근 제어자] [특수 제어자] [데이터 타입] [변수명] = [초기 값];`
-- 작성 예시:
-```java
-// Fields
 
+Java에서 클래스(Class)는 객체를 생성하기 위한 설계도입니다.
+데이터(필드)와 그 데이터를 처리하는 행위(메서드)를 하나로 묶는 캡슐화의 기본 단위입니다.
+
+|**구성 요소**|**설명**|
+|---|---|
+|**필드 (Fields)**|객체의 상태를 저장하는 변수 (멤버 변수)|
+|**생성자 (Constructors)**|객체가 생성될 때 호출되며, 필드를 초기화하는 특수 메서드|
+|**메서드 (Methods)**|객체의 동작이나 기능을 정의하는 코드 블록|
+
+1. 필드(Fields / 멤버 변수)
+	- 클래스에서 가장 먼저 객체의 상태와 데이터를 정의하는 변수입니다.
+	- 보통 정적(Static)인 변수를 먼저 선언하고, 그 다음 인스턴스 변수를 작성합니다.
+	- 문법 구조: `[접근 제어자] [특수 제어자] [데이터 타입] [변수명] = [초기 값];`
+	
+2. 생성자(Constructor)
+	- 클래스 이름과 동이하며 반환 타입이 없습니다.
+	- 객체 생성 시 `new` 연산자와 함께 호출됩니다.
+	- 생성자를 명시하지 않으면 컴파일러가 기본 생성자(Default Constructor)를 자동으로 추가합니다.
+	  
+3. 메서드(Method)
+	- 객체 간의 데이터 상호작용을 담당합니다.
+	- `this` 키워드를 사용하여 인스턴스 자신의 필드나 메서드에 접근할 수 있습니다.
+
+
+```java
+public class DatabaseConfig {
+	
+	// 1. 필드(상태 정의)
+	private static final String DEFAULT_DRIVER = "com.mysql.cj.jdbc.Driver"; // 정적 상수
+	private String url;       // DB 주소
+	private String username;  // 사용자명
+	private int timeout;      // 연결 제한 시간
+	
+	// 2. 생성자(객체 초기화)
+	public DatabaseConfig(String url, String username) {
+		this.url = url;
+		this.username = username;
+		this.timeout = 30; // 기본 값 설정
+	}
+	
+	// 생성자 오버로딩(다양한 방식으로 객체 생성 가능)
+	public DatabaseConfig(String url, String username, int timeout){
+		this.url = url;
+		this.username = username;
+		this.timeout = timeout;
+	}
+	
+	// 3. 메서드(행위 정의)
+	public void printConnectionInfo() {
+		System.out.println("--- DB Connection Info ---");
+		System.out.println("Driver: " + DEFAULT_DRIVER);
+		System.out.println("URL: " + this.url);
+		System.out.println("User: " + this.username);
+		System.out.println("Timeout: " + this.timeout + "s");
+	}
+	
+	// Getter/Setter(캡슐화 유지)
+	public void seTimeout(int timeout) {
+		if (timeout > 0) {
+			this.timeout = timeout;
+		}
+	}	
+}
+
+public class Main {
+	public static void main(String[] args) {
+		// 객체 생성(인스턴스화)
+		DatabaseConfig myDB = new DatabaseConfig("jdbc:mysql://localhost:3306/mydb", "admin"");
+		
+		// 메서드 호출
+		myDB.setTimeout(60);
+		myDB.printConnectionInfo();
+	}
+}
 ```
+
 
 
 ---
