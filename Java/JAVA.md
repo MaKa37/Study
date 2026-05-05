@@ -360,6 +360,57 @@ public class Main {
 
 ## 02. 패키지
 
+Java에서 기본적으로 제공하는 표준 라이브러리(Java API) 주요 패키지
+
+JDK(Java Development Kit)를 설치하면 별도의 추가 설정 없이 사용할 수 있다.
+
+### java.lang(가장 핵심적인 기본 패키지)
+
+- 자바 프로그래밍에 가장 필수적인 클래스들을 모아둔 패키지
+- 특징: 자바에서 유일하게 `import`문을 작성하지 않아도 컴파일러가 자동으로 포함시킵니다.
+- 주요 클래스: `String`, `Object`, `System`, `Math`, `Thread`, 기본 자료형의 래퍼 클래스(Integer, Double 등).
+
+---
+### java.util (유틸리티 및 자료구조)
+
+- 프로그램 개발에 유용한 다양한 유틸리티 클래스와 데이터 구조를 다루는 ==컬렉션 프레임워크(Collection Framework)==를 포함합니다.
+- 주요 클래스: `ArrayList`, `HashMap`, `List`, `Map`(자료구조), `Scanner`(입력), `Random`(난수 발생), `Arrays`, `Collections`(배열 및 컬렉션 조작).
+
+
+---
+### java.io
+
+- java.io: 파일, 콘솔, 네트워크 등을 통한 데이터의 스트림(Stream) 기반 입출력 기능을 제공합니다.
+  (`File`, `InputStream`, `OutputStream`, `Reader`, `Writer`)
+- java.nio: 자바 4부터 추가된 패키지로, 기존 `java.io`의 속도와 성능을 개선한 버퍼(Buffer) 및 채널(Channel) 기반의 비동기 입출력 기능을 제공합니다.
+
+---
+### java.time
+
+- 자바 8부터 도입된 패키지로, 기존의 `java.util.Date`나 `Calendar`의 단점을 보완하고 직관적이고 안전한 날짜/시간 API를 제공합니다.
+- 주요 클래스: `LocalDate`, `LocalTime`, `LocalDateTime`, `ZonedDateTime`.
+
+---
+### java.net
+
+- 인터넷 및 네트워크 통신과 관련된 기능을 제공합니다.
+- 주요 클래스: `URL`, `Socket`, `ServerSocket`, `HttpURLConnection`.
+
+
+---
+### java.math
+
+- 기본 자료형의 범위를 벗어나거나 소수점 오차 없이 매우 정밀한 계산이 필요할 때 사용합니다.
+- 주요 클래스: `BigInteger`(무한대의 정수, `BigDecimal`(오차없는 실수 연산).
+
+---
+### java.sql
+
+- 자바 프로그램과 관계형 데이터베이스(RDBMS)를 연결하고 데이터를 조작하기 위한 JDBC(Java Database Connectivity) API를 제공합니다.
+- 주요 인터페이스: `Connection`, `Statement`, `PreparedStatement`, `ResultSet`.
+
+---
+
 ## 03. 
 
 ## 04. 
