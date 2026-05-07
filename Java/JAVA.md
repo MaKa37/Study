@@ -167,7 +167,7 @@ public class DataTypeExample {
 |           | **대입 연산자**  | `=`, `+=`, `-=`, `*=`, `/=`, `%=` | 값을 변수에 할당 (복합 대입 포함)                         |
 |           | **증감 연산자**  | `++`, `--`                        | 변수의 값을 1씩 증가 또는 감소                           |
 |           | **비교 연산자**  | `==`, `!=`, `>`, `<`, `>=`, `<=`  | 두 값을 비교하여 참/거짓(boolean) 반환                   |
-|           | **논리 연산자**  | `&&`,  \|, `!`                    | AND(그리고), OR(또는), NOT(부정) 조건 결합              |
+|           | **논리 연산자**  | `&&`,  \| \|, `!`                 | AND(그리고), OR(또는), NOT(부정) 조건 결합              |
 |           | **배타적 연산자** | `^`                               | XOR(배타적 논리합)                                 |
 |           | **삼항 연산자**  | `? :`                             | 조건식 ? 참일 때 값 : 거짓일 때 값                       |
 | **특수 기호** | **중괄호**     | `{ }`                             | 클래스, 메서드, 제어문 등의 **코드 블록(영역)** 지정            |
@@ -260,15 +260,15 @@ public class OperatorSymbolExample { // { } 클래스 블록
 
 ##### 비트 연산자
 
-|**분류**|**기호**|**주요 의미**|
-|---|---|---|
-|**비트 AND**|`&`|두 비트가 **모두 1일 때만 1**, 그 외에는 0|
-|**비트 OR**|`\|`|두 비트 중 **하나라도 1이면 1**, 모두 0이면 0|
-|**비트 XOR**|`^`|두 비트가 **서로 다르면 1**, 같으면 0 (배타적 논리합)|
-|**비트 NOT**|`~`|비트 반전 (0은 1로, 1은 0으로 변경)|
-|**Left Shift**|`<<`|지정한 수만큼 비트를 **왼쪽**으로 이동 (빈자리는 0으로 채움)|
-|**Right Shift**|`>>`|지정한 수만큼 비트를 **오른쪽**으로 이동 (빈자리는 원래의 부호 비트로 채움)|
-|**논리적 Right Shift**|`>>>`|지정한 수만큼 비트를 **오른쪽**으로 이동 (부호 상관없이 빈자리는 무조건 0으로 채움)|
+| **분류**              | **기호** | **주요 의미**                                          |
+| ------------------- | ------ | -------------------------------------------------- |
+| **비트 AND**          | `&`    | 두 비트가 **모두 1일 때만 1**, 그 외에는 0                      |
+| **비트 OR**           | `\|`   | 두 비트 중 **하나라도 1이면 1**, 모두 0이면 0                    |
+| **비트 XOR**          | `^`    | 두 비트가 **서로 다르면 1**, 같으면 0 (배타적 논리합)                |
+| **비트 NOT**          | `~`    | 비트 반전 (0은 1로, 1은 0으로 변경)                           |
+| **Left Shift**      | `<<`   | 지정한 수만큼 비트를 **왼쪽**으로 이동 (빈자리는 0으로 채움)              |
+| **Right Shift**     | `>>`   | 지정한 수만큼 비트를 **오른쪽**으로 이동 (빈자리는 원래의 부호 비트로 채움)      |
+| **논리적 Right Shift** | `>>>`  | 지정한 수만큼 비트를 **오른쪽**으로 이동 (부호 상관없이 빈자리는 무조건 0으로 채움) |
 
 ---
 
@@ -416,15 +416,100 @@ JDK(Java Development Kit)를 설치하면 별도의 추가 설정 없이 사용�
 
 운영체제 및 자바 가상 머신(JVM)과 관련된 시스템 수준의 기능을 객체 생성 없이(static 멤버) 바로 사용 할 수 있게 해줍니다.
 
-|**주요 필드 / 메소드**|**기능**|
-|---|---|
-|`System.in`|표준 입력 스트림 (키보드 입력). `InputStream` 타입.|
-|`System.out`|표준 출력 스트림 (콘솔 화면 출력). `PrintStream` 타입.|
-|`System.err`|표준 에러 스트림 (에러 메시지 출력). `PrintStream` 타입.|
-|`System.nanoTime()`, `currentTimeMillis()`|현재 시간을 나노초 또는 밀리초 단위로 반환 (실행 시간 측정에 활용).|
-|`System.exit(int status)`|프로그램(JVM) 강제 종료.|
-|`System.arraycopy()`|배열의 요소를 빠르고 효율적으로 복사.|
+| **주요 필드 / 메소드**                            | **기능**                                   |
+| ------------------------------------------ | ---------------------------------------- |
+| `System.in`                                | 표준 입력 스트림 (키보드 입력). `InputStream` 타입.    |
+| `System.out`                               | 표준 출력 스트림 (콘솔 화면 출력). `PrintStream` 타입.  |
+| `System.err`                               | 표준 에러 스트림 (에러 메시지 출력). `PrintStream` 타입. |
+| `System.nanoTime()`, `currentTimeMillis()` | 현재 시간을 나노초 또는 밀리초 단위로 반환 (실행 시간 측정에 활용). |
+| `System.exit(int status)`                  | 프로그램(JVM) 강제 종료.                         |
+| `System.arraycopy()`                       | 배열의 요소를 빠르고 효율적으로 복사.                    |
+#### 핵심 개념 코드
 
+```java
+package Java;
+
+class DataRecord {
+    String id;
+
+    public DataRecord(String id) {
+        this.id = id;
+    }
+
+    // 객체 출력 시 메모리 주소(클래스이름@해시코드) 대신 실제 값 반환
+    @Override
+    public String toString() {
+        return "DataRecord{id='" + id + "'}";
+    }
+
+    // 두 객체의 논리적 동등성(실제 데이터 값)을 비교하도록 재정의
+    public boolean equals(Object obj) {
+        if (this == obj) return true; // 주소가 같을 시 동일
+        if (obj == null || getClass() != obj.getClass()) return false; // 타입 확인
+        DataRecord record = (DataRecord) obj;
+        return id. equals(record.id); // 내부 문자열 값 비교
+    }
+}
+
+public class JavaLang {
+    public static void main(String[] args) {
+
+        // 1. Object 클래스: toString() 및 equals() 재정의
+        // 객체의 메모리 주소가 아닌, '실제 데이터 값'을 기준으로 객체를 식별하고 출력하도록 오버라이딩하는 필수 패턴
+        System.out.println("### Object Example ###");
+
+        DataRecord rec1 = new DataRecord("user_123");
+        DataRecord rec2 = new DataRecord("user_123");
+
+        System.out.println(rec1.toString());   // DataRecord{id='user_123'}
+        System.out.println(rec1 == rec2);      // false(메모리 주소가 다름)
+        System.out.println(rec1.equals(rec2)); // true(오버라이딩된 equals 메서드로 값 비교)
+        System.out.println();
+
+        // 2. 문자열 처리: String vs StringBuilder & StringBuilder
+        // String(불변: Immutability)
+
+        String str = "Data"; // 메모리 주소: 2122698 <- System.out.println(str.hashCode());
+        str += " Pideline"; // 메모리 주소: -1370290460 (기존 객체가 삭제되고 새로 생성됨.)
+
+        // StringBuilder & StringBuffer(가변: Mutable)
+        StringBuilder sb = new StringBuilder("Data"); // StringBuffer sc = new StringBuffer("Data");
+        sb.append(" Pipeline");
+        sb.insert(5, "Stream ");
+        System.out.println(sb.toString());
+        System.out.println();
+
+        // 3. 포장 클래스(Wrapper Class): 박싱/언박싱 및 형 변환
+        // 기본 자료형과 객체 타입 간의 자동 변환(Auto-boxing/unboxing) 메커니즘과 데이터 타입 파싱 방법
+        
+        // 3-1. 오토 박싱(Auto-boxing) & 언박싱(Auto-unboxing)
+        Integer wrappedCount = 1000; // int -> Integer 객체로 자동 변환 (컬렉션에 담을 때 유용) 
+        int primitiveCount = wrappedCount; // Integer 객체 -> int로 자동 변환
+        
+        // 3-2. 데이터 형 변환(파싱)
+        String rawData = "45020";
+        int parsedData = Integer.parseInt(rawData); // 문자열 -> 정수 변환
+        double piVal = Double.parseDouble("3.14159"); // 문자열 -> 실수 변환
+        String stringfiedData = String.valueOf(parsedData); // 정수 -> 문자열 변환
+    
+        // 4. System 클래스: 성능 측정 및 배열 제어
+        int[] sourceData = {10, 20, 30, 40, 50};
+        int[] targetBuffer = new int[5];
+
+        // 4-1. 실행 시간 측정 시작(밀리초 단위)
+        long startTime = System.currentTimeMillis();
+
+        // 4-2. 고속 배열 복사(for문 보다 빠르고 효율적임)
+        // System.arraycopy(원본배열, 원본시작인덱스, 대상배열, 대상시작인덱스, 복사할길이)
+        System.arraycopy(sourceData, 0, targetBuffer, 0, sourceData.length);
+
+        // 4-3. 실행 시간 측정 종료
+        long endTime = System.currentTimeMillis();
+        System.out.println("로직 소요 시간: " + (endTime - startTime) + "ms");
+        System.exit(0);
+    }
+}
+```
 
 ---
 ### java.util (유틸리티 및 자료구조)

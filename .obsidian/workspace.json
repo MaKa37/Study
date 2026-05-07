@@ -78,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 209.50469589233398
+    "width": 209.50469589233398,
+    "collapsed": true
   },
   "right": {
     "id": "0ac39f8e08064043",
@@ -185,5 +186,7 @@
     }
   },
   "active": "4ec23573c89990f1",
-  "lastOpenFiles": []
+  "lastOpenFiles": [
+    "Java/JavaLang.java"
+  ]
 }
