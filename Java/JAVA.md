@@ -517,6 +517,79 @@ public class JavaLang {
 - 프로그램 개발에 유용한 다양한 유틸리티 클래스와 데이터 구조를 다루는 ==컬렉션 프레임워크(Collection Framework)==를 포함합니다.
 - 주요 클래스: `ArrayList`, `HashMap`, `List`, `Map`(자료구조), `Scanner`(입력), `Random`(난수 발생), `Arrays`, `Collections`(배열 및 컬렉션 조작).
 
+```java
+package Java;
+
+// java.util 핵심 클래스
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.Scanner;
+
+public class JavaUtil {
+    public static void main (String[] args) {
+        // 1. Scanner: 사용자에게 데이터 입력받기
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("생성할 데이터(난수)의 개수를 입력하세요: ");
+        int count = scanner.nextInt();
+
+        // 2. Random: 임의의 데이터(난수) 발생
+        Random random = new Random();
+
+        // 3. List & ArrayList: 순서가 있는 데이터의 동적 저장(컬렉션 프레임워크)
+        List<Integer> dataList = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            // 1부터 100 사이의 난수를 리스트에 추가
+            dataList.add(random.nextInt(100) + 1);
+        }
+        System.out.println("\n[1단계] 생성된 원본 데이터 리스트: " + dataList);
+
+        // 4. Collections: 컬렉션 객체 조작(오름차순 정렬)
+        Collections.sort(dataList);
+        System.out.println("[2단계] 오름차순 정렬된 데이터 리스트: " + dataList);
+
+        // 5. Map & HashMap: 키(Key)와 값(Value) 형태로 데이터 집계
+        // 데이터의 특징(홀수/짝수)을 기준으로 빈도수를 카운팅하여 저장합니다.
+        Map<String, Integer> dataAggregation = new HashMap<>();
+        dataAggregation.put("짝수", 0);
+        dataAggregation.put("홀수", 0);
+
+        for (int num : dataList) {
+            if (num % 2 == 0) {
+                dataAggregation.put("짝수", dataAggregation.get("짝수") + 1);
+            }
+            else {
+                dataAggregation.put("홀수", dataAggregation.get("홀수") + 1);
+            }
+        }
+        System.out.println("[3단계] 데이터 그룹화 및 집계 결과(Map): " + dataAggregation);
+
+        // 6. Arrays: 배열 조작
+        // 동적 자료구조인 List를 정적 크기의 Array(배열)로 변환 후 문자열로 출력
+        Integer[] dataArray = dataList.toArray(new Integer[0]);
+        System.out.println("[4단계] List를 Array로 변환하여 출력: " + Arrays.toString(dataArray));
+
+        // 리소스 해제
+        scanner.close();
+    }
+}
+```
+
+핵심 개념 요약 및 코드 매핑
+
+- **입력 및 도구 (`Scanner`, `Random`)**: 외부에서 조건(개수)을 주입받고(`Scanner`), 그에 맞춰 임의의 테스트 데이터를 대량으로 생성(`Random`)합니다.
+    
+- **선형 자료구조 (`List`, `ArrayList`)**: 생성된 데이터를 순차적으로 담습니다. 배열과 달리 크기가 동적으로 늘어나므로, 데이터의 양을 미리 알 수 없을 때 유용합니다.
+    
+- **데이터 정제 (`Collections`)**: 수집된 원본 데이터를 분석하기 쉽도록 `Collections.sort()`를 통해 오름차순으로 정렬합니다.
+    
+- **키-값 자료구조 및 집계 (`Map`, `HashMap`)**: 정렬된 데이터를 순회하며 '짝수'와 '홀수'라는 **Key**를 기준으로 발생 빈도(**Value**)를 누적 합산합니다. 데이터를 특정 기준에 따라 분류하고 집계할 때 핵심적으로 사용됩니다.
+    
+- **배열 유틸리티 (`Arrays`)**: 최종적으로 다른 레거시 시스템이나 고정 크기의 자료형을 요구하는 메서드에 데이터를 전달해야 할 때, List를 일반 배열로 변환하고 `Arrays.toString()`을 통해 손쉽게 출력 및 확인합니다.
 
 ---
 ### java.io
