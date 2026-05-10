@@ -598,6 +598,98 @@ public class JavaUtil {
   (`File`, `InputStream`, `OutputStream`, `Reader`, `Writer`)
 - java.nio: 자바 4부터 추가된 패키지로, 기존 `java.io`의 속도와 성능을 개선한 버퍼(Buffer) 및 채널(Channel) 기반의 비동기 입출력 기능을 제공합니다.
 
+```java
+package Java;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.LineNumberReader;
+import java.io.RandomAccessFile;
+
+public class JavaIO {
+    public static void main(String[] args) {
+
+        String dirPath = "data_pipeline";
+        String filePath = dirPath + File.separator + "sample_data.csv";
+
+        // 1. File 클래스: 입출력 기능은 없으나 파일과 디렉터리의 경로 및 상태를 제어합니다.
+        File dir = new File(dirPath);
+        if (!dir.exists()) {
+            dir.mkdir(); // 디렉터리 생성
+        }
+        File file = new File(filePath);
+
+        // 2. 캐릭터 기반 스트림(기본) + 보조 스트림: 텍스트 데이터 쓰기
+        // 파일에 문자 단위로 접근하는 FileWriter(기본 스트림)를 BufferedWriter(보조 스트림)로 감싸 성능을 높입니다.
+        try (FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(fw)) {
+                
+                bw.write("id,name,role\n");
+                bw.write("1,Alice,Data Engineer\n");
+                bw.write("2,Bob,Data Scientist\n");
+                bw.flush(); // 스트림에 남아있는 데이터를 목적지로 강제 전송
+                System.out.println("[1 단계] 버퍼(BufferedWriter)를 활용한 텍스트 데이터 적재 완료");
+                
+            } catch (IOException e) {
+            System.out.println("파일 쓰기 오류: " + e.getMessage());
+            }
+
+        // 3. 보조 스트림(LineNumberReader): 텍스트 데이터 읽기
+        // 텍스트 라인 번호를 추적하면서 데이터를 읽어 들입니다. (BufferedReader의 서브클래스)
+        try (FileReader fr = new FileReader(file);
+            LineNumberReader lnr = new LineNumberReader(fr)) {
+
+                System.out.println("\n[2 단계] LineNumberReader를 이용한 데이터 읽기");;
+                String line;
+                while ((line = lnr.readLine()) != null) {
+                    // getLineNumber()를 통해 현재 읽은 줄 번호를 함께 출력합니다.
+                    System.out.printf("Line %d: %s\n", lnr.getLineNumber(), line);
+                }
+
+            } catch (IOException e) {
+                System.out.println("파일 읽기 오류: " + e.getMessage());
+            }
+
+            // 4. RandomAccessFile: 파일 포인터를 이용한 임의 위치 접근
+            // 스트림처럼 순차적이지 않고, 원하는 위치로 이동(seek)하여 읽고 쓸 수 있습니다.
+            try (RandomAccessFile raf = new RandomAccessFile(file, "rw")) {
+                System.out.println("\n[3 단계 RandomAccessFile을 이용한 데이터 수정");
+
+                // 파일의 맨 처음(0번 바이트)으로 포인터 이동
+                raf.seek(0);
+                char firstChar = (char) raf.read();
+                System.out.println("수정 전 첫 글자: " + firstChar); // 'i' 출력 예상
+                
+                // 다시 맨 처음으로 돌아가서 'i'를 대문자 'I'로 덮어쓰기
+                raf.seek(0);
+                raf.write('I');
+                System.out.println("첫 글자를 'I'로 변경 완료 (sample_data.csv 파일 확인)");
+
+            } catch (IOException e) {
+                System.out.println("랜덤 액세스 오류: " + e.getMessage());
+            }
+    }    
+}
+
+```
+
+핵심 개념 요약
+
+- **`File` 클래스의 역할 한계**: 코드의 첫 단계에서 보듯 `File` 객체 자체로는 데이터를 읽거나 쓸 수 없습니다. 경로 확인, 파일 존재 여부(`exists()`), 생성(`mkdir()`)과 같은 메타데이터 관리용으로만 사용됩니다.
+    
+- **기본 스트림과 보조 스트림의 결합 (데코레이터 패턴)**:
+    
+    - `FileWriter fw = new FileWriter(file)`는 파일과 직접 연결되는 **기본 스트림**입니다.
+        
+    - `new BufferedWriter(fw)`는 이 기본 스트림을 감싸서 내부적으로 버퍼링을 수행하는 **보조 스트림**입니다. 실제 I/O 횟수를 줄여 시스템 성능을 대폭 향상시킵니다.
+        
+- **바이트(Byte) vs 캐릭터(Character) 스트림**: 제공하신 마크다운 내용처럼 `InputStream`/`OutputStream`은 이미지나 실행 파일 같은 1바이트 기반 이진 데이터를, `Reader`/`Writer`는 위 예제와 같은 CSV, TXT 등의 2바이트 문자열 데이터를 처리하는 데 목적이 있습니다.
+    
+- **비순차적 접근 (`RandomAccessFile`)**: 일반적인 스트림은 물이 흐르듯 한 방향으로만 순차적으로 데이터를 처리하지만, `RandomAccessFile`은 `seek(long pos)` 메서드를 통해 마치 배열의 인덱스에 접근하듯 파일 내부의 특정 바이트 위치로 즉시 점프하여 데이터를 읽거나 수정할 수 있습니다.
+
 ---
 ### java.time
 

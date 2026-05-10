@@ -171,8 +171,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300.5,
-    "collapsed": true
+    "width": 300.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -187,6 +186,9 @@
   },
   "active": "4ec23573c89990f1",
   "lastOpenFiles": [
+    "data_pipeline/sample_data.csv",
+    "data_pipeline",
+    "Java/JavaIO.java",
     "Java/JavaUtil.java",
     "Java/JavaUtil",
     "Java/JavaLang.java"
