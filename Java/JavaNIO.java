@@ -93,6 +93,49 @@ public class JavaNIO {
         }
         
         // NioWatchService
-        
+        try {
+
+            //1. WatchService 객체 생성
+            WatchService watchService = FileSystems.getDefault().newWatchService();
+            Path path = Paths.get("Exdata");
+
+            // 2. 감시할 이벤트 종류 등록 (생성, 수정, 삭제)
+            path.register(watchService,
+                StandardWatchEventKinds.ENTRY_CREATE,
+                StandardWatchEventKinds.ENTRY_MODIFY,
+                StandardWatchEventKinds.ENTRY_DELETE);
+            
+            System.out.println("디렉터리 감시 시작: " + path);
+
+            // 3. 이벤트 발생 대기 루프
+            while (true) {
+                WatchKey key = watchService.take(); // 이벤트 발생까지 블로킹 대기
+                
+                // 4. 발생한 이벤트 목록 순회 및 처리
+                for (WatchEvent<?> event : key.pollEvents()) {
+                    WatchEvent.Kind<?> kind = event.kind();
+                    Path targetPath = (Path) event.context(); // 이벤트가 발생한 파일명
+
+                    if (kind == StandardWatchEventKinds.ENTRY_CREATE) {
+                        System.out.println("[신규 데이터 유입 감지] 파일명: " + targetPath);
+                        // TODO: 해당 파일을 읽어서 가공하는 파이프라인 로직 호출                        
+                    } else if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
+                        System.out.println("[파일 수정 감지] 파일명: " + targetPath);                        
+                    } else if (kind == StandardWatchEventKinds.ENTRY_DELETE) {
+                        System.out.println("[파일 삭제 감지 파일명: " + targetPath);
+                    }
+
+                }
+
+                // 5. 다음 이벤트를 받기 위해 WatchKey 상태 초기화
+                boolean valid = key.reset();
+                if (!valid) {
+                    System.out.println("디렉터리 감시가 더 이상 유효하지 않습니다. 루프를 종료합니다.");
+                    break;
+                }
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
