@@ -1,4 +1,4 @@
-package Java;
+package JavaStudy;
 
 import java.io.BufferedWriter;
 import java.io.File;

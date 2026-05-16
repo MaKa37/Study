@@ -1,4 +1,4 @@
-package Java;
+package JavaStudy;
 
 // java.util 핵심 클래스
 import java.util.ArrayList;

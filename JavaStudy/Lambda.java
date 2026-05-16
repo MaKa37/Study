@@ -1,4 +1,4 @@
-package Java;
+package JavaStudy;
 
 interface Addable {
     int add(int a, int b);

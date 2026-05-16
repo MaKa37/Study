@@ -1,4 +1,4 @@
-package Java;
+package JavaStudy;
 
 class DataRecord {
     String id;

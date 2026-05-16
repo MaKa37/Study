@@ -1,4 +1,4 @@
-package Java;
+package JavaStudy;
 
 import java.nio.file.*;
 import java.io.IOException;

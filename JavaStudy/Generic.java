@@ -1,4 +1,4 @@
-package Java;
+package JavaStudy;
 
 /* 타입 파라미터 네이밍
 T: Type(일반적인 타입) {Integer, Double, Boolean, Long, Float, Character, String... Class name}

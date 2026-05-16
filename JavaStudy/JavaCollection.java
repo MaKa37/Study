@@ -1,6 +1,6 @@
-package Java;
+package JavaStudy;
 
-public class javaas {
+public class JavaCollection {
     public static void main (String[] args) {
         
     }
