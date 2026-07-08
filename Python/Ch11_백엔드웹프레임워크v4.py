@@ -36,6 +36,18 @@ def read_all_todos():
         # fetchall()로 가져온 데이터를 dict 리스트로 변환하여 반환하면 FastAPI가 자동으로 JSON 응답으로 만듭니다.
         return [dict(row) for row in cursor.fetchall]
     
+@app.post("/todos/post/")
+def create_user(user: UserCreate):
+    # 1. user 변수에 데이터가 담겨서 들어옵니다. (아직 메모리에만 있음)
+    
+    # 2. 반드시 데이터베이스(SQLite 등)를 열고 INSERT 문을 실행해 하드디스크에 기록해야 합니다.
+    with sqlite3.connect(DB_FILE) as conn:
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO todos (name, age) VALUES (?, ?)", (user.name, user.age))
+        conn.commit()
+
+    return {"message": f"{user.name}님의 정보가 DB에 저장되었습니다!", "path": DB_PATH}
+    
 # [UPDATE] 기존 데이터 덮어쓰기 (단일 수정)
 @app.put("/todos/{todo_id}")
 def update_todo(todo_id: int, title: str):
