@@ -1,3 +1,7 @@
+"""
+프로그램을 터미널의 어느 위치에서 실행하든 상관없이, 항상 스크립트 파일과 같은 폴더에 있는 설정 파일(`config.json`)을 안전하게 읽어오는 함수를 작성합니다.
+"""
+
 import json
 from pathlib import Path
 
