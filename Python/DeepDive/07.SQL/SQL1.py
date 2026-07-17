@@ -1,42 +1,68 @@
-import pandas as pd
+import os
+import psycopg2
+from dotenv import load_dotenv
 
-# Series 생성 예시 (1차원)
-ages = pd.Series([25, 32, 28, 41], name="Age")
-print(ages)
+# DB.env 파일의 절대 경로 지정 (r을 붙여 백슬래시 이스케이프 방지)
+env_path = r"C:\Users\foodg\Desktop\GoogleDrive\Github\Study\DB.env"
 
-print('*' * 40)
+# dotenv_path 파라미터를 사용하여 해당 경로의 파일 불러오기
+load_dotenv(dotenv_path=env_path)
 
-# DataFrame 생성 예시 (2차원)
-data = {
-    "Name": ["Alice", "Bob", "Charlie", "David"],
-    "Age": [25, 32, 28, 41],
-    "City": ["Seoul", "Busan", "Seoul", "Jeju"]
-}
-df = pd.DataFrame(data)
-print(df)
-
-print('*' * 40)
-
-# 'Age'가 30 이상인 데이터만 필터링하여 'Name'과 'City' 컬럼만 추출
-filtered_df = df.loc[df['Age'] >= 30, ['Name', 'City']]
-print(filtered_df)
-
-print('*' * 40)
-
-# 'Age' 컬럼의 빈칸을 해당 컬럼의 평균값으로 채우기
-data2 = {
-    "Alpha": ["A", "B"],
-    "B": [30, None]
+# os.getenv()를 사용하여 환경변수 값 가져오기
+DB_CONFIG = {
+    'host': os.getenv('DB_HOST'),
+    'dbname': os.getenv('DB_NAME'),
+    'user': os.getenv('DB_USER'),
+    'password': os.getenv('DB_PASSWORD'),
+    'port': int(os.getenv('DB_PORT', 5432))
 }
 
-df2 = pd.DataFrame(data2)
+def fetch_hr_data():
+    conn = None
+    cursor = None
+    
+    try:
+        conn = psycopg2.connect(**DB_CONFIG)
+        cursor = conn.cursor()
 
-mean_Age = df['Age'].mean()
-df2['B'] = df2['B'].fillna(mean_Age)
-print(df2)
+        sql_query = """
+        SELECT
+            d.dept_name AS "부서명",
+            e.name AS "직원명",
+            e.salary AS "급여",
+            SUM(e.salary) OVER (
+                PARTITION BY e.dept_id
+                ORDER BY e.salary DESC
+            ) AS "부서내급여_누적합계",
+            e.salary - LAG(e.salary, 1, 0) OVER (
+                PARTITION BY e.dept_id 
+                ORDER BY e.salary DESC
+            ) AS "앞사람과의_급여격차"
+        FROM hr.employees e
+        INNER JOIN hr.departments d ON e.dept_id = d.dept_id
+        ORDER BY d.dept_name, e.salary DESC;
+        """
 
-print('*' * 40)
+        cursor.execute(sql_query)
+        rows = cursor.fetchall()
+        col_names = [desc[0] for desc in cursor.description]
 
-# 'City'별로 그룹화하여 'Age'의 평균(mean) 구하기
-dept_age = df.groupby('City')['Age'].mean()
-print(dept_age)
+        header = " | ".join(f"{name:<15}" for name in col_names)
+        print(header)
+        print("-" * len(header))
+        
+        for row in rows:
+            formatted_row = " | ".join(f"{str(val):<15}" for val in row)
+            print(formatted_row)
+
+    except (Exception, psycopg2.Error) as error:
+        print("PostgreSQL 데이터를 가져오는 중 오류가 발생했습니다:", error)
+        
+    finally:
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
+
+if __name__ == "__main__":
+    fetch_hr_data()
