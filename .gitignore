@@ -23,5 +23,9 @@
 hs_err_pid*
 replay_pid*
 
-#venv
+#env
 venv*
+*.env
+
+#etc
+00.API_Guide/
